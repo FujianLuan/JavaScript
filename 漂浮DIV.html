@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+	<script>
+	(function($){
+		$.fn.floatAd=function(options){
+
+			var defaults={imgSrc:"",url:"",openStyle:1,speed:15};//默认参数
+			var options=$.extend(defaults,options);//合并参数
+			var _target=options.openStyle==1?"target='_blank'":'';//参数映射
+
+			/*建立浮动div*/
+			var html="<div id='float_ad'style='position:absolute;left:0px;top:0px;z-index:1000000;cleat:both;'>";
+			html+="  <a href='"+options.url+"' "+_target+"><img src='"+options.imgSrc+"' border='0' class='float_ad_img'/></a>";
+			html+="</div>";
+			$('body').append(html);
+
+			function init(){
+				var x=0,y=0;
+				var xin=true,yin=true;
+				var step=1;
+				var delay=10;
+
+				var obj=$("#float_ad");
+				obj.find('img.float_ad_img').load(function(){
+					var float=function(){
+						var L=T=0;
+						var OW=obj.width();
+						var OH=obj.height();
+						var DW=$(document).width();
+						var DH=$(document).height();
+
+						x=x+step*(xin?1:-1);
+						if(x<L){xin=true;x=L}
+
+						if(x>DW-OW-1){xin=false;x=DW-OW-1}
+						y=y+step*(yin?1:-1);
+
+						if(y>DH-OH-1){yin=false;y=DH-OH-1}
+						if(y<T){yin=true;y=T}
+
+						var left=x;
+						var top=y;
+						obj.css({'top':top,'left':left})
+					};
+
+						var itl=setInterval(float,options.speed);
+						$('#float_ad').mouseover(function(){
+							clearInterval(itl)
+						});
+						$('#float_ad').mouseout(function(){
+							itl=setInterval(float,options.speed)
+						})
+					})}
+				init();
+			}
+			})(jQuery);
+
+
+	    
+	$(document).ready(function(){
+	        $(function(){
+	            $("body").floatAd({
+	                imgSrc : 'https://www.baidu.com/img/baidu_jgylogo3.gif',
+	                url:'http://www.tjtour.gov.cn//News/201609/2016091510150024.htm'
+	            });
+	        })
+	});
+	</script>
+</head>
+<body>
+</body>
+</html>
