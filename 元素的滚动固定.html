@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>元素的滚动固定</title>
+    
+	<script type="text/javascript" src="img/jquery-1.3.2.min.js"></script>
+    <style type="text/css">
+			.wrap{
+				width: 800px;
+				height:2000px;
+				margin:0 auto;
+				background-color:lightblue;
+			}
+			.left{
+				width: 570px;
+				height:800px;
+				background-color:lightgreen;
+				float: left;
+			}
+
+			.right{
+				width: 200px;
+				height:200px;
+				background-color:gold;
+				float:right;
+				margin-top: 200px;
+
+			}
+
+    </style>
+</head>
+<body>
+   
+
+    <div class="wrap">
+		<div class="left" id="l">滚动部分</div>
+		<div class="right" id="r">侧边栏宽高200px</div>
+    </div>
+
+	<script type="text/javascript">
+
+    var divh=$("#r").offset().top;
+
+    $(document).scroll(function(){    	
+    //var barh=$("html,body").scrollTop();
+    var barh=document.body.scrollTop|document.documentElement.scrollTop;//scrollTop取值存在兼容问题
+    //alert(divh);
+    //alert(barh);
+    if (barh>divh) {
+    	$("#r").css({"position":"fixed","top":"-100px","right":"50%","margin-right":"-400px"});
+    	//alert(divh);
+    } else {
+    	$("#r").css({"position":"relative","top":"0px","right":"0px","margin-right":"0px"});
+    	//alert(divh);
+    }
+
+    })
+    $(document).ready(function(){
+
+    	$("#r").click(function(){
+    		alert('高'+$("#r").height()+'宽'+$("#r").width()+'坐标，div块的左上顶点的坐标,x:'+$("#r").offset().top+',y:'+$("#r").offset().left);
+    	})
+    })
+	</script>
+</body>
+</html>
