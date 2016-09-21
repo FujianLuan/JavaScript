@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>遮罩层</title>
+	<meta charset="utf-8">
+	<script src="http://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+	<style>
+	/*遮罩层*/
+	.overlay{	
+		display: none;		
+	}
+	#overlay-fade{
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,.5);
+		opacity: 0.5;
+		-moz-opacity:0.5;
+		position: fixed;
+		top:0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	#overlay-light{
+		
+		background-color:white;
+		position: fixed;
+
+		/*固定宽高div居中*/
+		width: 500px;
+		height: 500px;
+		left:50%;
+		top:50%;
+		margin-left: -250px;
+		margin-top:-250px;
+		/*固定宽高div居中*/
+
+		box-shadow: 
+			2px 2px 2px 10px rgba(125,125,125,.6),
+			2px -2px 2px 10px rgba(125,125,125,.6),
+			-2px 2px 2px 10px rgba(125,125,125,.6),
+			-2px -2px 2px 10px rgba(125,125,125,.6),
+			;
+	}
+	#overlay-light .off{
+		font-weight: bolder;
+		font-size: 29px;
+		color: #a43;
+		cursor: pointer;
+		position: absolute;
+		top:0;
+		right: 0;
+	}
+	#overlay-light .off:hover{
+		color: #a43;
+		transform: rotate(135deg);
+		transform-origin: center;
+		-webkit-transform: rotate(135deg);
+	}
+	</style>
+	
+  </head>
+  
+  <body>
+
+	<div style="width:800px;margin:0 auto;">
+	<pre>
+		一、去除滚动条方法
+		body添加overflow：hidden属性，IE6、7下不生效，需要给html增加overflow:hidden属性
+		样式中需要对IE6、7及其它浏览器用hack辨别，这是因为当页面拉到下面时如果html或body被overflow:hidden，透明弹层
+		下面的页面就会被部分正常隐藏，通过透明看到的一片的灰度，具体颜色跟平台及用户设置背景色有关。
+		body或html去掉滚动条后，页面会有一个滚动条宽度/2的跳动！这个跳动对用户体验来十分不好，因此给body添加一
+		下右padding，大小为滚动条的宽度。windows平台下滚动条的宽度为17px，linux平台下不同滚动器滚动条宽度不一致，
+		可以用相关代码计算出滚动条的宽度，以下以windows平台为例。
+		相关代码：
+		document.documentElement.style.cssText = ‘overflow:none;+overflow:hidden;_overflow:hidden;’;
+		document.body.style.cssText = ‘overflow:hidden;+overflow:none;_overflow:none;padding:0 17px 0 0;’;
+		以上代码不考虑html或body是否有内联样式 ，如果html或body有内联样式则需要累加，否则会清空原有样式。
+
+		二、去除隐患其它方法滚动页面(防止误操作)
+		隐藏滚动条后，用鼠标滚轮滚动页面确实不会动了，以为这就ok了，不是…
+		键盘快捷键也可以操作浏览器的一些操作，与滚动页面相关的，比如：上下按键、翻页按键等。针对键盘快捷键，需要取消他们的默认操作。
+
+		三、添加弹出层样式
+		给body添加全局样式(兼容IE6)
+		height:100%;
+		给弹层添加滚动样式
+		overflow-y: auto;
+		width: 100%;
+		height: 100%;
+		left:0;
+		_padding:0 17px 0 0;IE6bug，子元素绝对定位后对于父元素的padding依然有效
+	</pre>	
+	<input type="button" class="popbtn" value="弹出遮罩层" style="width:100px;margin:0 auto;">
+	</div>
+	<div class="overlay" id="overlay-fade"></div>
+	<div class="overlay" id="overlay-light">遮罩层<div class="off">&times;</div></div>
+	<script type="text/javascript">
+	$(".off").click(function () {
+		$(".overlay").hide();
+		$("body,html").css({"overflow":"auto"});
+	})
+	$(".popbtn").click(function () {
+		$(".overlay").show();
+		$("body,html").css({"overflow":"hidden"});//去掉滚动条禁止滚动，只设置body ie6和7无效所以加上html
+	})
+	</script>
+  </body>
+</html>
