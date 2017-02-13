@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312" />
+<title>JS 实现放大与缩小网页</title>
+<script language="javascript">
+var i=0;
+document.onkeyup=function(){
+    var IEKey = event.keyCode;
+　　if (IEKey == 76) {
+    　　i++;
+    　　document.body.style.zoom=1+i/10;
+　　}
+　　if (IEKey == 83) {
+    　　i--;
+    　　document.body.style.zoom=1+i/10;
+　　}
+　　if (IEKey == 82) {
+    　　document.body.style.zoom=1;
+    　　i=1;
+　　}
+}
+</SCRIPT>
+
+</head>
+<body>
+<img src="http://www.newxing.com/skins/NewXing/logo.gif" /><br /><br />
+JS 实现放大与缩小网页<br />
+按键盘S放大，按L缩小 ，R复原。
+</body>
+</html>
