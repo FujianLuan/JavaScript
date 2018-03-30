@@ -23,7 +23,7 @@ function setCookie(n, v, mins, dn, path){
     }
 }
 function setCookie(name,value,expiredDays){
-	//cookie如果未设置expires则在本次会话有效，关闭浏览器后，或页面则失效。
+	//cookie如果未设置expires则在本次会话有效，关闭浏览器后（关闭标签页cookie仍然有效）则失效。
 	//如果设置expires则使用GMT格式的时间
         //单位为毫秒
 	//大于或等于1天时expres直接跟天数如expires:7;？
