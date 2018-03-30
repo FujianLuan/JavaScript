@@ -22,6 +22,16 @@ function setCookie(n, v, mins, dn, path){
 	    document.cookie = n + "=" + v + expires + "; " + dn + "path=" + path;
     }
 }
+function setCookie(name,value,expiredDays){
+	//cookie如果未设置expires则在本次会话有效，关闭浏览器后，或页面则失效。
+	//如果设置expires则使用GMT格式的时间
+        //单位为毫秒
+	//大于或等于1天时expres直接跟天数如expires:7;？
+	//少于1天时转换为毫秒；？
+	var expdate=new Date();
+	expdate.setTime(expdate.getTime()+(expiredDays*24*60*60*1000));
+	document.cookie=name+"="+escape(value)+((expiredDays==null) ? "" : ";expires="+expdate.toUTCString());
+}
 /**
  * @param
  *   n cookie name
